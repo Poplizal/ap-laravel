@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\homeController;
+use App\Http\Controllers\Homecontroller;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,19 +15,9 @@ use App\Http\Controllers\homeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get("courses",function(){
-    return "welcome from courses";
-});
-Route::get("courses/laravel",function(){
-});
-Route::get('contact',function(){
-    $data=request('name');
-    return view("contact",["data"=>$data]);
-});
-Route::get('home',[homeController::class,'home']);
+
+
+Route::resource('/',Homecontroller::class);
 Route::get('about',function(){
     return view('about',['data'=>"about page"]);
 });
