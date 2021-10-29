@@ -17,10 +17,10 @@ use App\Http\Controllers\Homecontroller;
 
 
 
-Route::resource('/',Homecontroller::class);
-Route::get('about',function(){
-    return view('about',['data'=>"about page"]);
-});
+Route::resource('posts',Homecontroller::class);
+// Route::get('about',function(){
+//     return view('about',['data'=>"about page"]);
+// });
 //explanation
 // Route::get()  method works when the server port path is running;
 // prarmeter "/" is meant server port path(http://127.0.0.1:8000/)
