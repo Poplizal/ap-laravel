@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\posts;
 use Illuminate\Http\Request;
+use App\Models\post_category;
 
 class Homecontroller extends Controller
 {
@@ -26,7 +27,8 @@ class Homecontroller extends Controller
      */
     public function create()
     {
-         return view('newPost');
+        $categories=post_category::all();
+         return view('newPost',compact('categories'));
     }
 
     /**
@@ -40,11 +42,14 @@ class Homecontroller extends Controller
         $request->validate([
             'title'=>'required|max:255',
             'description'=>'required|max:255',
+            'category'=>'required',
         ]);
         posts::create([
             'name'=>$request->title,
             'description'=>$request->description,
+            'category_id'=>$request->category,
         ]);
+     
         // $post=new posts();
         // $post->name=$request->title;
         // $post->description=$request->description;
@@ -62,7 +67,7 @@ class Homecontroller extends Controller
     public function show(posts $post)
     {
     // public function post_category()
-        dd($post);
+        // dd($post);
         return view('show',compact('post'));
     }
 
@@ -74,8 +79,9 @@ class Homecontroller extends Controller
      */
     public function edit($id)
     {
+    $categories=post_category::all();
     $datatoEdit=posts::findOrFail($id);
-    return view("edit",compact('datatoEdit'));
+    return view("edit",compact('datatoEdit','categories'));
     }
 
     /**
@@ -90,11 +96,14 @@ class Homecontroller extends Controller
         $request->validate([
             'title'=>"required|max:255",
             'description'=>"required|max:255",
+            'category'=>'required',
         ]);
    posts::where('id',$id)->update([
 'name'=>$request->title,
 'description'=>$request->description,
+'category_id'=>$request->category,
    ]);
+
     // $datatoUpdate=posts::findOrFail($id);
     // $datatoUpdate->name=$request->title;
     // $datatoUpdate->description=$request->description;

@@ -27,6 +27,16 @@
     <label for="formGroupExampleInput2">Description</label>
     <input type="text" class="form-control" id="formGroupExampleInput2" value="{{old('description')}}" name="description" placeholder="description" >
   </div>
+  @error('category')
+    <div class="alert alert-danger">{{ $message }}</div>
+@enderror
+  <select name="category" class="form-select my-3" aria-label="Default select example ">
+  <option selected value="">Choose category</option>
+  @foreach($categories as $category)
+  <option value="{{$category->id}}">{{$category->name}}</option>
+@endforeach
+</select>
+
 <input type="submit" class="btn btn-primary" value="submit">
 <a href="/posts" class="btn btn-secondary">back</a>
 </form>

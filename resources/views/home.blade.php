@@ -4,6 +4,7 @@
   <h2 class="text-center py-3">Blog Sample Site</h2>
   <div>
     <a href="/posts/create" class="btn btn-primary">New Post</a>
+<a href="/logout" class="btn btn-danger">logout</a>
   </div>
 <div class="card my-2">
   <div class="card-header text-center">
