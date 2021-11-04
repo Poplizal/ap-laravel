@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\posts;
 use Illuminate\Http\Request;
 use App\Models\post_category;
+use Illuminate\Support\Facades\Auth;
 
 class Homecontroller extends Controller
 {
@@ -16,7 +17,7 @@ class Homecontroller extends Controller
     public function index(
     )
     {
-        $data=posts::orderBy('id','desc')->get();
+        $data=posts::where('user_id',Auth::user()->id)->orderBy('id','desc')->get();
         return view('home',compact('data'));
     }
 
@@ -66,6 +67,9 @@ class Homecontroller extends Controller
     //Route model binding
     public function show(posts $post)
     {
+        if($post->user_id != Auth::user()->id){
+            abort(403);
+        }
     // public function post_category()
         // dd($post);
         return view('show',compact('post'));
@@ -79,6 +83,11 @@ class Homecontroller extends Controller
      */
     public function edit($id)
     {
+        // if(posts::findOrFail($id)->user_id != Auth::user()->id){
+        //     abort(403);
+        // }
+        // $this->authorize('view', $post);
+    $this->authorize('view',posts::findOrFail($id));
     $categories=post_category::all();
     $datatoEdit=posts::findOrFail($id);
     return view("edit",compact('datatoEdit','categories'));

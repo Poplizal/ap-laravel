@@ -2,9 +2,14 @@
 @section('content')
 <div class="container">
   <h2 class="text-center py-3">Blog Sample Site</h2>
-  <div>
+  <div class="d-flex justify-content-between">
+    <div>
     <a href="/posts/create" class="btn btn-primary">New Post</a>
-<a href="/logout" class="btn btn-danger">logout</a>
+    <a href="/logout" class="btn btn-danger">logout</a>
+  </div>
+<div>
+      <h1 class="text-secondary">{{Auth::user()->name}}</h1>
+</div>
   </div>
 <div class="card my-2">
   <div class="card-header text-center">
