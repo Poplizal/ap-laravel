@@ -16,7 +16,7 @@ class posts extends Model
     {
         return $this->belongsTo(post_category::class,"category_id");
     }
-    protected $fillable = ['name','description','category_id'];
+    protected $fillable = ['name','description','category_id','user_id'];
     // protected $guarded = [];
 
 }

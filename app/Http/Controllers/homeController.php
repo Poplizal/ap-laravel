@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\posts;
+use App\Mail\PostStored;
 use Illuminate\Http\Request;
 use App\Models\post_category;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class Homecontroller extends Controller
 {
@@ -14,9 +16,12 @@ class Homecontroller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(
-    )
+    public function index(Request $request)
     {
+        // Mail::raw('testing Mail',function($msg){
+        //     $msg->to('pop123@gmail.com')->subject("testing mail to pop");
+        // });
+        // $request->session()->flash('homeSession','you got home yet');
         $data=posts::where('user_id',Auth::user()->id)->orderBy('id','desc')->get();
         return view('home',compact('data'));
     }
@@ -45,17 +50,19 @@ class Homecontroller extends Controller
             'description'=>'required|max:255',
             'category'=>'required',
         ]);
-        posts::create([
+        $post=posts::create([
             'name'=>$request->title,
             'description'=>$request->description,
             'category_id'=>$request->category,
+            'user_id'=>Auth::user()->id,
         ]);
      
         // $post=new posts();
         // $post->name=$request->title;
         // $post->description=$request->description;
         // $post->save();
-        return redirect('/posts');
+        Mail::to(Auth::user()->email)->send(new PostStored($post));
+        return redirect('/posts')->with('store',"successfully stored");
     }
 
     /**

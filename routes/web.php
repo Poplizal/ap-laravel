@@ -1,5 +1,6 @@
 <?php
 
+use App\TestFacade;
 use App\Models\posts;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -20,6 +21,10 @@ use App\Http\Controllers\Homecontroller;
 
 
 Route::resource('posts',Homecontroller::class)->middleware(['auth:sanctum', 'verified']);
+Route::get('/',function(){
+    dd(config('aprogrammer.courses.course2'));
+    // dd(TestFacade::test_hello());
+});
 //or
 //Route::resource('posts',Homecontroller::class)->middleware('auth');
 // Route::get('about',function(){

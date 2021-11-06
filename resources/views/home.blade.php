@@ -15,6 +15,16 @@
   <div class="card-header text-center">
   Latest Blogs
   </div>
+  @if(session('homeSession'))
+<div class="alert alert-success">
+  {{session('homeSession')}};
+</div>
+@endif
+@if(session('store')) 
+<div class="alert alert-success">
+  {{session('store')}};
+</div>
+@endif
 @foreach($data as $post)
   <div class="card-body">
     <h5 class="card-title">{{$post->name}}</h5>
