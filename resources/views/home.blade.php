@@ -21,8 +21,9 @@
 </div>
 @endif
 @if(session('store')) 
-<div class="alert alert-success">
-  {{session('store')}};
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Status </strong> {{session('store')}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
 @foreach($data as $post)
