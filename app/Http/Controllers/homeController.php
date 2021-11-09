@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\posts;
 use App\Mail\PostStored;
+use App\Events\PostCreated;
 use Illuminate\Http\Request;
 use App\Models\post_category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\PostCreatedNotification;
 
 class Homecontroller extends Controller
 {
@@ -32,7 +35,7 @@ class Homecontroller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {  
         $categories=post_category::all();
          return view('newPost',compact('categories'));
     }
@@ -61,7 +64,12 @@ class Homecontroller extends Controller
         // $post->name=$request->title;
         // $post->description=$request->description;
         // $post->save();
-        Mail::to(Auth::user()->email)->send(new PostStored($post));
+        //Mailable
+        // Mail::to(Auth::user()->email)->send(new PostStored($post));
+        //Notification
+        // Notification::send(Auth::user(),new PostCreatedNotification());      
+        // Auth::user()->notify(new PostCreatedNotification());
+        event(new PostCreated($post));
         return redirect('/posts')->with('store',"successfully stored");
     }
 
